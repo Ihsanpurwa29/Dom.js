@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suit V2.0</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB9Whi_geNuLY5VAQNWVo3RDERwXL0Cl71Pw&s);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .iKom {
+            width: 500px;
+            height: 200px;
+            background-color: red;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .iPlayer {
+            width: 500px;
+            height: 200px;
+            background-color: blue;
+            border-radius: 0 0 20px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        span img {
+            transition: filter 0.5s, background-color 0.5s;
+            /* Menambahkan transisi untuk efek yang lebih halus */
+        }
+
+        .gbrPilPlayer:hover {
+            filter: grayscale(100%) sepia(100%) hue-rotate(180deg) saturate(200%);
+            background-color: red;
+            cursor: pointer;
+        }
+
+        .iHasil {
+            width: 150px;
+            height: 75px;
+            background-color: yellow;
+            border: 5px solid black;
+            border-radius: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: x-large;
+            font-weight: 900;
+            cursor: default;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="iKom">
+            <img src="assets/suit.jpg" alt="" class="pKom">
+        </div>
+        <div class="iPlayer">
+            <span><img src="assets/batu.png" alt="" class="gbrPilPlayer" id="batu"></span>
+            <span><img src="assets/gunting.png" alt="" class="gbrPilPlayer" id="gunting"></span>
+            <span><img src="assets/kertas.png" alt="" class="gbrPilPlayer" id="kertas"></span>
+        </div>
+        <div class="iHasil">PILIH</div>
+    </div>
+    <script type="application/javascript">
+        function pilihanKomputer() {
+            const pilihanKomputer = Math.floor(Math.random() * 3);
+            if (pilihanKomputer == 0) return 'batu';
+            if (pilihanKomputer == 1) return 'gunting'
+            return 'kertas';
+        }
+
+        function hasil(pilKom, pilPlayer) {
+            if (pilKom == pilPlayer) return 'SERI';
+            if (pilKom == 'batu') return (pilPlayer == 'kertas') ? 'MENANG' : 'KALAH';
+            if (pilKom == 'gunting') return (pilPlayer == 'batu') ? 'MENANG' : 'KALAH';
+            if (pilKom == 'kertas') return (pilPlayer == 'gunting') ? 'MENANG' : 'KALAH';
+        }
+
+        const pilihan = document.querySelectorAll('span img');
+
+        pilihan.forEach(function (i) {
+            i.addEventListener('click', handleClick);
+        });
+
+        function handleClick(event) {
+            const i = event.currentTarget;
+            const pilKom = pilihanKomputer();
+            const pilPlayer = i.id;
+            const isi = hasil(pilKom, pilPlayer);
+
+            const imgKom = document.getElementsByClassName('pKom')[0];
+            imgKom.setAttribute('src', 'assets/' + pilKom + '.png');
+
+            const iHasil = document.getElementsByClassName('iHasil')[0];
+            iHasil.innerHTML = isi;
+
+            pilihan.forEach(function (img) {
+                img.classList.remove('gbrPilPlayer');
+                img.removeEventListener('click', handleClick);
+            });
+
+            setTimeout(() => {
+                iHasil.innerHTML = 'LAGI?';
+                iHasil.style.cursor = 'pointer';
+                iHasil.addEventListener('click', resetGame, { once: true });
+            }, 2000);
+        }
+
+        function resetGame() {
+            const imgKom = document.getElementsByClassName('pKom')[0];
+            const iHasil = document.getElementsByClassName('iHasil')[0];
+
+            imgKom.setAttribute('src', 'assets/suit.jpg');
+            iHasil.innerHTML = 'PILIH';
+            iHasil.style.cursor = 'default';
+
+            pilihan.forEach(function (img) {
+                img.classList.add('gbrPilPlayer');
+                img.addEventListener('click', handleClick);
+            });
+        }
+    </script>
+</body>
+
+</html>

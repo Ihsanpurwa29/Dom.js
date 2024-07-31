@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dom Manipulation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: 2px solid #adadad;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10%;
+        }
+        section {
+            margin-top: 20%;
+            margin-bottom: 20%;
+        }
+        .mode {
+            background-color: violet;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <section id="sectionA" class="section">
+            <h1>JUDUL BAGIAN KE SATU</h1>
+        </section>
+        <section id="sectionB" class="section bagan ngarang">
+            <h1>JUDUL BAGIAN KE DUA</h1>
+            <button onclick="onOff()">ubah mode</button>
+        </section>
+    </div>
+    <script type="application/javascript">
+        // memanipulasi DOM
+        // ada dua method pada manipulasi DOM yaitu manipulasi element, dan manipulasi node
+
+        /*
+        // manipulasi element
+        // .innerHTML
+        const secA = document.querySelectorAll('section')[0];
+        secA.innerHTML = '<i>teks ini dibuat menggunakan javascript</i> <h1></h1>';
+        const judul1 = secA.getElementsByTagName('h1')[0];
+        judul1.innerHTML = 'TEKS INI DIUBAH MENGGUNAKAN JAVASCRIPT';
+        // .style.(propertiCSS)
+        secA.style.backgroundColor = 'orange';
+        // mengelola atribut pada sebuah element HTML
+        // .setAttribute()
+        judul1.setAttribute('class', 'judul'); // setAttribute berfungsi untuk menambahkan atribute pada sebuah element HTML, tetapi jika atibut itu sudah ada pada element HTML tersebut maka atribut yang baru akan menimpa atribut yang lama
+        // .getAttribute()
+        const secB = document.getElementsByTagName('section')[1]; // getAttribute berfungsi untuk mengambil nilai dari sebuah atribut pada element HTML
+        console.log(secB.getAttribute('id'));
+        // .removeAttribute
+        secA.removeAttribute('style'); // removeAttribute berfungsi untuk menghapus sebuah atribut pada element HTML
+        // mengelola class dengan classList
+        // .classList.add
+        secA.classList.add('kotak'); // berfungsi untuk menambahkan class
+        // .classList.remove
+        secA.classList.remove('section'); // berfungsi untuk menghapus class
+        // .classList.toggle
+        // cara kerja dari toggle begini : perintah pertama js akan mengecek apakah ada class yang bernama seperti apa yang di perintahkan? jika tidak ada maka tambahkan class tersebut, tetapi jika ada maka hapus class tersebut
+        secA.classList.toggle('section'); // berfungsi untuk menambahkan class
+        secA.classList.toggle('section'); // berfungsi untuk menghapus class
+
+        // contoh lain penggunaan classList.toggle bisa membuat tombol ganti mode
+        const body = document.body;
+        function onOff() {
+            body.classList.toggle('mode');
+        }
+
+        // .classList.item
+        console.log(secB.classList.item(2)); // berfungsi untuk mengetahui value class dari sebuah element berdasarkan indexnya
+        // .classList.contains
+        console.log(secB.classList.contains('label')); // ini berfungsi untuk menanyakan apakah ada value tertentu pada class didalam element HTML
+        // .classList.replace
+        secB.classList.replace('ngarang', 'ngaceng'); // berfungsi untuk mengubah nilai dari class pada HTML dengan nilai yang lain
+        */
+
+
+
+        // manipulasi node
+
+        // method-method
+        // document.createElement()
+        // document.createTextNode()
+        // node.appendChild()
+        // node.insertBefore()
+        // parentNode.removeChild()
+        // parentNode.replaceChild()
+
+
+        const judulBaru = document.createElement('h1'); // ini berfungsi untuk membuat tag didalam HTML
+        const isiJdlBaru = document.createTextNode('ini judul baru yg dibuat menggunakan JS'); // sedangkan ini berfungsi untuk membuat sebuah teks
+        const secA = document.getElementsByTagName('section')[0];
+        judulBaru.appendChild(isiJdlBaru); // ini berfungsi untuk meemindahkan teks yang sudah dibuat kedalam tag yang sudah dibuat tetapi masih belum memiliki penempatan pada HTML-nya
+        secA.appendChild(judulBaru); // sedangkan ini berfungsi untuk memposisikan tag beserta teks nya yang sudah digabungkan keakhir elementnya
+
+        const p1 = document.createElement('p');
+        const isiP1 = document.createTextNode('ini adalah paragraf baru yang dibuat menggunakan JS');
+        p1.appendChild(isiP1); // ini berfungsi untuk menggabungkan tag dengan sebuah teks yang telah dibuat
+        secA.insertBefore(p1, judulBaru); // ini berfungsi untuk memposisikan sebuah element secara spesifik. terdapat dua parameter yang dimana param pertama diisi dengan element yang akan kita posisikan, dan param kedua diisi dengan satu element setelah kita posisikan 
+
+        const secB = document.querySelectorAll('section')[1];
+        const tbl = document.getElementsByTagName('button')[0];
+        secB.removeChild(tbl); // berfungsi untuk menghapus element berdasarkan parentnya
+
+        const p2 = document.createElement('i');
+        const isiP2 = document.createTextNode('kalimat ini diubah menggunakan JS');
+        const jdl2 = document.querySelectorAll('h1')[2];
+        p2.appendChild(isiP2); // berfungsi untu menggabungkan node
+        p2.style.fontWeight = '900'; // ini cuman styling
+        secB.replaceChild(p2, jdl2); // berfungsi untuk mengganti sebuah element dengan element baru berdasarkan parentnya
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan DOM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-weight: 600;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .mode {
+            background-color: black;
+        }
+
+        .btnMode {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+            border-radius: 2px;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+
+        .kotak {
+            width: 30px;
+            height: 30px;
+            margin: auto;
+            margin-top: 20px;
+        }
+
+        input {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <button>ubah mode</button> <br><br>
+    <section>
+        <div class="kotak merah"></div>
+        <input type="range" min="0" max="255">
+    </section>
+    <section>
+        <div class="kotak hijau"></div>
+        <input type="range" min="0" max="255">
+    </section>
+    <section>
+        <div class="kotak biru"></div>
+        <input type="range" min="0" max="255">
+    </section>
+
+    <script type="application/javascript">
+        const btnMode = document.querySelector('button');
+        btnMode.addEventListener('click', changeMode);
+        function changeMode() {
+            document.body.classList.toggle('mode');
+            btnMode.classList.toggle('btnMode');
+        }
+        const btn2 = document.createElement('button');
+        const teksBtn2 = document.createTextNode('ubah random mode');
+        btn2.appendChild(teksBtn2);
+        btnMode.after(btn2);
+        btn2.addEventListener('click', function () {
+            const red = Math.floor(Math.random() * 255);
+            const green = Math.floor(Math.random() * 255);
+            const blue = Math.floor(Math.random() * 255);
+            document.body.style.backgroundColor = `rgb(${red} ${green} ${blue})`;
+        })
+
+        const ktkR = document.getElementsByClassName('merah')[0];
+        const ktkG = document.getElementsByClassName('hijau')[0];
+        const ktkB = document.getElementsByClassName('biru')[0];
+        ktkR.style.backgroundColor = 'red';
+        ktkG.style.backgroundColor = 'lime';
+        ktkB.style.backgroundColor = 'blue';
+
+        const slider1 = document.getElementsByTagName('input')[0];
+        const slider2 = document.getElementsByTagName('input')[1];
+        const slider3 = document.getElementsByTagName('input')[2];
+        slider1.addEventListener('input', function () {
+            document.body.style.backgroundColor = `rgb(${slider1.value} ${slider2.value} ${slider3.value})`
+        })
+        slider2.addEventListener('input', function() {
+            document.body.style.backgroundColor = `rgb(${slider1.value} ${slider2.value} ${slider3.value})`
+        })
+        slider3.addEventListener('input', function() {
+            document.body.style.backgroundColor = `rgb(${slider1.value} ${slider2.value} ${slider3.value})`
+        })
+
+        document.body.addEventListener('mousemove', function(event) {
+            const xPos = Math.round(event.clientX / window.innerWidth * 255);
+            const yPos = Math.round(event.clientY / window.innerWidth * 255);
+            document.body.style.backgroundColor = `rgb(${xPos} 0 ${yPos})`;
+        })
+
+
+    </script>
+</body>
+
+</html>

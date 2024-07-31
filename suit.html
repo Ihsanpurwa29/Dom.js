@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html,
+        body {
+            height: 100%;
+            background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZarNDR7NeKoYVpsQzK-9YWc3w0VFe6oUbKg&s);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .btnMain {
+            width: 200px;
+            height: 100px;
+            background-color: white;
+            border: 5px solid orangered;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            font-size: xx-large;
+            font-weight: bolder;
+            border-radius: 10em;
+            display: flex;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+        }
+
+        .container {
+            display: none;
+            /* justify-content: center;
+            align-items: center; */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        img {
+            margin: 10px;
+            border: 10px solid orangered;
+            cursor: pointer;
+        }
+
+        .hiddenChoose {
+            opacity: 0;
+            transition: opacity .7s;
+        }
+
+        .hasilPilihan {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -500%);
+            color: white;
+            filter: drop-shadow(0 0 2px #000);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out, visibility 0s 1s;
+        }
+
+        .hasilPilihan.show {
+            transform: translate(-50%, -500%);
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out, visibility 0s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+    </div>
+    <script type="application/javascript">
+        const container = document.getElementsByClassName('container')[0];
+        const btnMain = document.createElement('div');
+        const btnMainTeks = document.createTextNode('MAINKAN');
+        btnMain.appendChild(btnMainTeks);
+        btnMain.classList.add('btnMain');
+        document.body.appendChild(btnMain);
+
+        const pilihan1 = document.createElement('img');
+        const pilihan2 = document.createElement('img');
+        const pilihan3 = document.createElement('img');
+        pilihan1.setAttribute('src', 'assets/batu.png');
+        pilihan2.setAttribute('src', 'assets/gunting.png');
+        pilihan3.setAttribute('src', 'assets/kertas.png');
+        pilihan1.style.borderRadius = '50%';
+        pilihan2.style.borderRadius = '50%';
+        pilihan3.style.borderRadius = '50%';
+        container.appendChild(pilihan1);
+        container.appendChild(pilihan2);
+        container.appendChild(pilihan3);
+
+        const pilihanKomputer = Math.floor(Math.random() *3);
+        let pilihanKomputerString;
+
+        switch(pilihanKomputer) {
+            case 0:
+                pilihanKomputerString = 'batu';
+                break;
+            case 1:
+                pilihanKomputerString = 'gunting';
+                break;
+            case 2:
+                pilihanKomputerString = 'kertas';
+                break;
+        }
+        console.log(pilihanKomputerString)
+
+        pilihan1.addEventListener('click', function () {
+            pilihan2.classList.add('hiddenChoose');
+            pilihan3.classList.add('hiddenChoose');
+            pilihan2.addEventListener('transitionend', function () {
+                pilihan2.style.display = 'none';
+                pilihan3.style.display = 'none';
+            })
+            const hasilPilihan = document.createElement('h1');
+            hasilPilihan.textContent = 'ANDA MEMILIH BATU';
+            hasilPilihan.classList.add('hasilPilihan');
+            document.body.insertBefore(hasilPilihan, document.body.firstChild);
+            setTimeout(() => {
+                hasilPilihan.classList.add('show');
+            }, 100)
+            pilihan1.style.cursor = 'default';
+
+            switch(pilihanKomputerString) {
+                case 'batu':
+                    console.log(`komputer memilih ${pilihanKomputerString}, permainan seri!!`);
+                    break;
+                case 'gunting':
+                    console.log(`komputer memilih ${pilihanKomputerString}, anda menang!!`);
+                    break;
+                case 'kertas':
+                    console.log(`komputer memilih ${pilihanKomputerString}, anda kalah!!`);
+                    break;
+            }
+        })
+        pilihan2.addEventListener('click', function () {
+            pilihan1.classList.add('hiddenChoose');
+            pilihan3.classList.add('hiddenChoose');
+            pilihan3.addEventListener('transitionend', function () {
+                pilihan1.style.display = 'none';
+                pilihan3.style.display = 'none';
+            })
+            const hasilPilihan = document.createElement('h1');
+            hasilPilihan.textContent = 'ANDA MEMILIH GUNTING';
+            hasilPilihan.classList.add('hasilPilihan');
+            document.body.insertBefore(hasilPilihan, document.body.firstChild);
+            setTimeout(() => {
+                hasilPilihan.classList.add('show');
+            }, 100)
+            pilihan2.style.cursor = 'default';
+
+            switch(pilihanKomputerString) {
+                case 'batu':
+                    console.log(`komputer memilih ${pilihanKomputerString}, anda kalah!!`);
+                    break;
+                case 'gunting':
+                    console.log(`komputer memilih ${pilihanKomputerString}, permainan seri!!`);
+                    break;
+                case 'kertas':
+                    console.log(`komputer memilih ${pilihanKomputerString}, anda menang!!`);
+                    break;
+            }
+        })
+        pilihan3.addEventListener('click', function () {
+            pilihan1.classList.add('hiddenChoose');
+            pilihan2.classList.add('hiddenChoose');
+            pilihan1.addEventListener('transitionend', function () {
+                pilihan1.style.display = 'none';
+                pilihan2.style.display = 'none';
+            })
+            const hasilPilihan = document.createElement('h1');
+            hasilPilihan.textContent = 'ANDA MEMILIH KERTAS';
+            hasilPilihan.classList.add('hasilPilihan');
+            document.body.insertBefore(hasilPilihan, document.body.firstChild);
+            setTimeout(() => {
+                hasilPilihan.classList.add('show');
+            }, 100)
+            pilihan3.style.cursor = 'default';
+
+            switch(pilihanKomputerString) {
+                case 'batu':
+                    console.log(`komputer memilih ${pilihanKomputerString}, anda menang!!`);
+                    break;
+                case 'gunting':
+                    console.log(`komputer memilih ${pilihanKomputerString}, anda kalah!!`);
+                    break;
+                case 'kertas':
+                    console.log(`komputer memilih ${pilihanKomputerString}, permainan seri!!`);
+                    break;
+            }
+        })
+
+        btnMain.addEventListener('click', function () {
+            btnMain.style.display = 'none';
+            container.style.display = 'flex';
+        })
+
+        // document.body.addEventListener('mousemove', function (event) {
+        //     const xPos = Math.round(event.clientX / window.innerWidth * 255);
+        //     const yPos = Math.round(event.clientY / window.innerWidth * 255);
+        //     document.body.style.backgroundColor = `rgb(${xPos} 0 ${yPos})`;
+        // })
+
+    </script>
+</body>
+
+</html>
